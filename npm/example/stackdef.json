@@ -5,7 +5,7 @@
       "cluster": "input",
       "queries": [
         {
-          "name": "table"
+          "name": "get.js"
         }
       ],
       "type": "function",
@@ -17,12 +17,24 @@
       "cluster": "input",
       "queries": [
         {
-          "name": "table"
+          "name": "getByEmail.js"
         }
       ],
       "type": "function",
       "isQuery": true,
       "nodeId": "node1"
+    },
+    "getByEmail.js": {
+      "name": "getByEmail.js",
+      "queries": [
+        {
+          "name": "table"
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": true,
+      "nodeId": "node2"
     },
     "updateCover.js": {
       "name": "updateCover.js",
@@ -49,7 +61,7 @@
       "type": "function",
       "cluster": "internal",
       "isQuery": false,
-      "nodeId": "node2"
+      "nodeId": "node3"
     },
     "createUser.js": {
       "name": "createUser.js",
@@ -69,7 +81,7 @@
       "type": "function",
       "cluster": "internal",
       "isQuery": false,
-      "nodeId": "node3"
+      "nodeId": "node4"
     },
     "updateUser.js": {
       "name": "updateUser.js",
@@ -89,7 +101,7 @@
       "type": "function",
       "cluster": "internal",
       "isQuery": false,
-      "nodeId": "node4"
+      "nodeId": "node5"
     },
     "deleteUser.js": {
       "name": "deleteUser.js",
@@ -112,7 +124,7 @@
       "type": "function",
       "cluster": "internal",
       "isQuery": false,
-      "nodeId": "node5"
+      "nodeId": "node6"
     },
     "cognitoSync.js": {
       "name": "cognitoSync.js",
@@ -132,7 +144,7 @@
       "type": "function",
       "cluster": "internal",
       "isQuery": false,
-      "nodeId": "node6"
+      "nodeId": "node7"
     },
     "preSignup.js": {
       "name": "preSignup.js",
@@ -153,7 +165,7 @@
       "type": "function",
       "cluster": "internal",
       "isQuery": true,
-      "nodeId": "node7"
+      "nodeId": "node8"
     },
     "postAuth.js": {
       "name": "postAuth.js",
@@ -173,7 +185,7 @@
       "type": "function",
       "cluster": "internal",
       "isQuery": false,
-      "nodeId": "node8"
+      "nodeId": "node9"
     },
     "dbConsumer.js": {
       "name": "dbConsumer.js",
@@ -194,7 +206,7 @@
       "type": "function",
       "cluster": "internal",
       "isQuery": false,
-      "nodeId": "node9"
+      "nodeId": "node10"
     },
     "get.js": {
       "name": "get.js",
@@ -212,13 +224,13 @@
       "type": "function",
       "cluster": "internal",
       "isQuery": true,
-      "nodeId": "node10"
+      "nodeId": "node11"
     },
     "table": {
       "name": "table",
       "type": "table",
       "cluster": "internal",
-      "nodeId": "node11"
+      "nodeId": "node12"
     },
     "calm-cover-topic": {
       "name": "topic",
@@ -229,39 +241,39 @@
       },
       "type": "topic",
       "cluster": "extInput",
-      "nodeId": "node12"
+      "nodeId": "node13"
     },
     "cover-dlq-queue": {
       "name": "cover-dlq-queue",
       "type": "queue",
       "cluster": "output",
-      "nodeId": "node13"
+      "nodeId": "node14"
     },
     "auth": {
       "name": "auth",
       "type": "auth",
       "cluster": "input",
-      "nodeId": "node14"
+      "nodeId": "node15"
     },
     "POST /user": {
       "name": "POST /user",
       "type": "API",
       "cluster": "input",
       "isQuery": false,
-      "nodeId": "node15"
+      "nodeId": "node16"
     },
     "DELETE /user": {
       "name": "DELETE /user",
       "type": "API",
       "cluster": "input",
       "isQuery": false,
-      "nodeId": "node16"
+      "nodeId": "node17"
     },
     "verification-email": {
       "name": "verification-email",
       "type": "email",
       "cluster": "output",
-      "nodeId": "node17"
+      "nodeId": "node18"
     },
     "calm-invites-getInvite.js": {
       "name": "getInvite.js",
@@ -269,7 +281,7 @@
       "type": "function",
       "cluster": "extOutput",
       "isQuery": true,
-      "nodeId": "node18"
+      "nodeId": "node19"
     },
     "topic": {
       "name": "topic",
@@ -278,29 +290,37 @@
       },
       "type": "topic",
       "cluster": "output",
-      "nodeId": "node19"
+      "nodeId": "node20"
     },
     "GET /user": {
       "name": "GET /user",
       "type": "API",
       "cluster": "input",
       "isQuery": true,
-      "nodeId": "node20"
+      "nodeId": "node21"
     }
   },
   "edges": [
     {
-      "name": "table",
+      "name": "get.js",
       "depType": "query",
       "fromName": "getUser.js",
-      "toName": "table",
+      "toName": "get.js",
+      "async": false,
+      "isQuery": true
+    },
+    {
+      "name": "getByEmail.js",
+      "depType": "query",
+      "fromName": "getUserByEmail.js",
+      "toName": "getByEmail.js",
       "async": false,
       "isQuery": true
     },
     {
       "name": "table",
       "depType": "query",
-      "fromName": "getUserByEmail.js",
+      "fromName": "getByEmail.js",
       "toName": "table",
       "async": false,
       "isQuery": true

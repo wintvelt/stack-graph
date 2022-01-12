@@ -31,6 +31,8 @@
     - [ ] add permissions for `get.js` to access `table`
 
 ### In `/src` folder create the handler functions
+  - [ ] create `getByEmail.js` handler
+    - [ ] add query of `table`
   - [ ] create `updateCover.js` handler
     - [ ] add update for `table` to update cover
     - [ ] add update for `cover-dlq-queue` to failed cover calls
@@ -58,5 +60,5 @@
   - [ ] expose arn for API `POST /user`
   - [ ] expose arn for function `getUser.js`
   - [ ] expose arn for function `getUserByEmail.js`
-  - [ ] expose function `getUser.js`
-  - [ ] expose function `getUserByEmail.js`
+  - [ ] expose function `getUser.js`to query `get.js`
+  - [ ] expose function `getUserByEmail.js`to query `getByEmail.js`

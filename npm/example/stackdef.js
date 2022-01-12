@@ -3,10 +3,14 @@ module.exports = {
     nodes: [
         {
             name: "getUser.js", cluster: "input",
-            queries: ["table"]
+            queries: ["get.js"]
         },
         {
             name: "getUserByEmail.js", cluster: "input",
+            queries: ["getByEmail.js"]
+        },
+        {
+            name: "getByEmail.js",
             queries: ["table"]
         },
         {

@@ -108,7 +108,12 @@ const clientTodosFromNode = (clientLines, node) => {
             break;
 
         case "function":
-            output.push(`  - [ ] expose function \`${node.name}\``)
+            const specs = (node.pubs) ?
+                `to invoke \`${node.pubs[0].name}\``
+                : (node.queries) ?
+                    `to query \`${node.queries[0].name}\``
+                    : ''
+            output.push(`  - [ ] expose function \`${node.name}\`${specs}`)
             output.push(`  - [ ] expose arn for function \`${node.name}\``)
             break
 
