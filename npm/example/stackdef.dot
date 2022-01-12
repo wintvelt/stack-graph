@@ -1,0 +1,146 @@
+digraph {
+        node [shape=plaintext fontname="Arial" fontsize="10"]
+        edge [fontname="Arial" fontsize="10"]
+        subgraph cluster0 {
+            label="input"
+            fontname="Arial"
+            fontsize=10
+            color=grey
+            style=dashed
+            node0 [ shape=plaintext color=orange label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="12">getUser.js</font></td></tr>
+            </table>>]
+        node1 [ shape=plaintext color=orange label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="12">getUserByEmail.js</font></td></tr>
+            </table>>]
+        node14 [ shape=component label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">auth</font></td></tr>
+            </table>>]
+        node15 [ shape=invhouse fontsize=12 label="POST\n/user"]
+        node16 [ shape=invhouse fontsize=12 label="DELETE\n/user"]
+        node20 [ shape=invhouse color=orange fontsize=12 label="GET\n/user"]
+    }
+    subgraph cluster1 {
+            label="internal"
+            fontname="Arial"
+            fontsize=10
+            color=grey
+            style=dashed
+            node2 [ shape=box label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">updateCover.js</font></td></tr>
+            </table>>]
+        node3 [ shape=box label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">createUser.js</font></td></tr>
+            </table>>]
+        node4 [ shape=box label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">updateUser.js</font></td></tr>
+                        <tr><td align="left"><font point-size="10">change name (not cover)</font></td></tr>
+        </table>>]
+        node5 [ shape=box label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">deleteUser.js</font></td></tr>
+                        <tr><td align="left"><font point-size="10">deletes user</font></td></tr>
+        </table>>]
+        node6 [ shape=box label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">cognitoSync.js</font></td></tr>
+                        <tr><td align="left"><font point-size="10">Custom message</font></td></tr>
+        </table>>]
+        node7 [ shape=box color=orange label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">preSignup.js</font></td></tr>
+                        <tr><td align="left"><font point-size="10">Verify if invite exists</font></td></tr>
+        </table>>]
+        node8 [ shape=box label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">postAuth.js</font></td></tr>
+                        <tr><td align="left"><font point-size="10">update stats on visit</font></td></tr>
+        </table>>]
+        node9 [ shape=box label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">dbConsumer.js</font></td></tr>
+                        <tr><td align="left"><font point-size="10">db stream to publish changes</font></td></tr>
+        </table>>]
+        node10 [ shape=box color=orange label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">get.js</font></td></tr>
+                        <tr><td align="left"><font point-size="10">user details upon login</font></td></tr>
+        </table>>]
+        node11 [ shape=cylinder label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">table</font></td></tr>
+            </table>>]
+    }
+    subgraph cluster2 {
+            label="extInput"
+            fontname="Arial"
+            fontsize=10
+            color=grey
+            style=dashed
+            node12 [shape=rarrow label="calm-cover\ntopic"]
+    }
+    subgraph cluster3 {
+            label="output"
+            fontname="Arial"
+            fontsize=10
+            color=grey
+            style=dashed
+            node13 [ shape=rarrow style=dashed color=red label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">cover-dlq-queue</font></td></tr>
+            </table>>]
+        node17 [ shape=note label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">verification-email</font></td></tr>
+            </table>>]
+        node19 [ shape=rarrow label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">topic</font></td></tr>
+            <tr>
+                <td align="left"><font point-size="10">section:</font></td>
+                <td align="left"><font point-size="10">name, cover, visits</font></td>
+            </tr>
+            </table>>]
+    }
+    subgraph cluster4 {
+            label="extOutput"
+            fontname="Arial"
+            fontsize=10
+            color=grey
+            style=dashed
+            node18 [shape=plaintext label="calm-invites\ngetInvite.js" color=orange]
+    }
+    node0 -> node11 [color=orange arrowhead=nonenonenoneoinv]
+    node1 -> node11 [color=orange arrowhead=nonenonenoneoinv]
+    node12 -> node2 [label="dest=user\leventName=INSERT, MODIFY, REMOVE" arrowhead = nonenoneonormal]
+    node2 -> node11 [label="update cover"]
+    node2 -> node13 [label="failed cover calls"]
+    node14 -> node3 [label="Post confirmation" arrowhead = nonenoneonormal]
+    node3 -> node11 [label="create new user"]
+    node15 -> node4
+    node4 -> node11 [label="update user name"]
+    node16 -> node5
+    node5 -> node11
+    node5 -> node14 [label="delete from cognito"]
+    node14 -> node6 [label="Custom message" arrowhead = nonenoneonormal]
+    node6 -> node17 [label="signup + forgot psw mails"]
+    node14 -> node7 [label="Pre-signup" color=orange arrowhead=nonenonenoneoinv]
+    node7 -> node18 [color=orange arrowhead=nonenonenoneoinv]
+    node14 -> node8 [label="Post Auth" arrowhead = nonenoneonormal]
+    node8 -> node11 [label="update stats"]
+    node11 -> node9 [arrowhead = nonenoneonormal]
+    node9 -> node19
+    node20 -> node10 [color=orange arrowhead=nonenonenoneoinv]
+    node10 -> node11 [color=orange arrowhead=nonenonenoneoinv]
+
+    labelloc="t"
+    fontname="Arial"
+    fontsize="20"
+    label="calm-user"
+}

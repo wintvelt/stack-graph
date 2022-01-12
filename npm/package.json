@@ -1,0 +1,23 @@
+{
+  "name": "stack-graph",
+  "version": "1.1.0",
+  "description": "Build graphviz from stack definition file. Outputs .dot file, .json file (structure), .md file (todo list), and .png or .svg graph. Companion to sst-serverless microservice stack",
+  "main": "example/index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "graphviz", "aws", "sst-serverless"
+  ],
+  "author": "wintvelt",
+  "license": "ISC",
+  "dependencies": {
+    "jsonschema": "^1.4.0"
+  },
+  "devDependencies": {
+    "jest": "^27.4.5"
+  }
+}

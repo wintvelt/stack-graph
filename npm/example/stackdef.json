@@ -1,0 +1,489 @@
+{
+  "nodes": {
+    "getUser.js": {
+      "name": "getUser.js",
+      "cluster": "input",
+      "queries": [
+        {
+          "name": "table"
+        }
+      ],
+      "type": "function",
+      "isQuery": true,
+      "nodeId": "node0"
+    },
+    "getUserByEmail.js": {
+      "name": "getUserByEmail.js",
+      "cluster": "input",
+      "queries": [
+        {
+          "name": "table"
+        }
+      ],
+      "type": "function",
+      "isQuery": true,
+      "nodeId": "node1"
+    },
+    "updateCover.js": {
+      "name": "updateCover.js",
+      "subs": [
+        {
+          "serviceName": "calm-cover",
+          "name": "topic",
+          "filters": {
+            "dest": "user",
+            "eventName": "INSERT, MODIFY, REMOVE"
+          }
+        }
+      ],
+      "pubs": [
+        {
+          "name": "table",
+          "description": "update cover"
+        },
+        {
+          "name": "cover-dlq-queue",
+          "description": "failed cover calls"
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": false,
+      "nodeId": "node2"
+    },
+    "createUser.js": {
+      "name": "createUser.js",
+      "eventName": "INSERT",
+      "pubs": [
+        {
+          "name": "table",
+          "description": "create new user"
+        }
+      ],
+      "subs": [
+        {
+          "name": "auth",
+          "description": "Post confirmation"
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": false,
+      "nodeId": "node3"
+    },
+    "updateUser.js": {
+      "name": "updateUser.js",
+      "description": "change name (not cover)",
+      "eventName": "MODIFY",
+      "pubs": [
+        {
+          "name": "table",
+          "description": "update user name"
+        }
+      ],
+      "subs": [
+        {
+          "name": "POST /user"
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": false,
+      "nodeId": "node4"
+    },
+    "deleteUser.js": {
+      "name": "deleteUser.js",
+      "description": "deletes user",
+      "eventName": "REMOVE",
+      "pubs": [
+        {
+          "name": "table"
+        },
+        {
+          "name": "auth",
+          "description": "delete from cognito"
+        }
+      ],
+      "subs": [
+        {
+          "name": "DELETE /user"
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": false,
+      "nodeId": "node5"
+    },
+    "cognitoSync.js": {
+      "name": "cognitoSync.js",
+      "description": "Custom message",
+      "pubs": [
+        {
+          "name": "verification-email",
+          "description": "signup + forgot psw mails"
+        }
+      ],
+      "subs": [
+        {
+          "name": "auth",
+          "description": "Custom message"
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": false,
+      "nodeId": "node6"
+    },
+    "preSignup.js": {
+      "name": "preSignup.js",
+      "description": "Verify if invite exists",
+      "subs": [
+        {
+          "name": "auth",
+          "description": "Pre-signup",
+          "isQuery": true
+        }
+      ],
+      "queries": [
+        {
+          "serviceName": "calm-invites",
+          "name": "getInvite.js"
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": true,
+      "nodeId": "node7"
+    },
+    "postAuth.js": {
+      "name": "postAuth.js",
+      "description": "update stats on visit",
+      "pubs": [
+        {
+          "name": "table",
+          "description": "update stats"
+        }
+      ],
+      "subs": [
+        {
+          "name": "auth",
+          "description": "Post Auth"
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": false,
+      "nodeId": "node8"
+    },
+    "dbConsumer.js": {
+      "name": "dbConsumer.js",
+      "description": "db stream to publish changes",
+      "subs": [
+        {
+          "name": "table"
+        }
+      ],
+      "pubs": [
+        {
+          "name": "topic",
+          "filters": {
+            "section": "name, cover, visits"
+          }
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": false,
+      "nodeId": "node9"
+    },
+    "get.js": {
+      "name": "get.js",
+      "description": "user details upon login",
+      "subs": [
+        {
+          "name": "GET /user"
+        }
+      ],
+      "queries": [
+        {
+          "name": "table"
+        }
+      ],
+      "type": "function",
+      "cluster": "internal",
+      "isQuery": true,
+      "nodeId": "node10"
+    },
+    "table": {
+      "name": "table",
+      "type": "table",
+      "cluster": "internal",
+      "nodeId": "node11"
+    },
+    "calm-cover-topic": {
+      "name": "topic",
+      "serviceName": "calm-cover",
+      "filters": {
+        "dest": "user",
+        "eventName": "INSERT, MODIFY, REMOVE"
+      },
+      "type": "topic",
+      "cluster": "extInput",
+      "nodeId": "node12"
+    },
+    "cover-dlq-queue": {
+      "name": "cover-dlq-queue",
+      "type": "queue",
+      "cluster": "output",
+      "nodeId": "node13"
+    },
+    "auth": {
+      "name": "auth",
+      "type": "auth",
+      "cluster": "input",
+      "nodeId": "node14"
+    },
+    "POST /user": {
+      "name": "POST /user",
+      "type": "API",
+      "cluster": "input",
+      "isQuery": false,
+      "nodeId": "node15"
+    },
+    "DELETE /user": {
+      "name": "DELETE /user",
+      "type": "API",
+      "cluster": "input",
+      "isQuery": false,
+      "nodeId": "node16"
+    },
+    "verification-email": {
+      "name": "verification-email",
+      "type": "email",
+      "cluster": "output",
+      "nodeId": "node17"
+    },
+    "calm-invites-getInvite.js": {
+      "name": "getInvite.js",
+      "serviceName": "calm-invites",
+      "type": "function",
+      "cluster": "extOutput",
+      "isQuery": true,
+      "nodeId": "node18"
+    },
+    "topic": {
+      "name": "topic",
+      "filters": {
+        "section": "name, cover, visits"
+      },
+      "type": "topic",
+      "cluster": "output",
+      "nodeId": "node19"
+    },
+    "GET /user": {
+      "name": "GET /user",
+      "type": "API",
+      "cluster": "input",
+      "isQuery": true,
+      "nodeId": "node20"
+    }
+  },
+  "edges": [
+    {
+      "name": "table",
+      "depType": "query",
+      "fromName": "getUser.js",
+      "toName": "table",
+      "async": false,
+      "isQuery": true
+    },
+    {
+      "name": "table",
+      "depType": "query",
+      "fromName": "getUserByEmail.js",
+      "toName": "table",
+      "async": false,
+      "isQuery": true
+    },
+    {
+      "serviceName": "calm-cover",
+      "name": "topic",
+      "filters": {
+        "dest": "user",
+        "eventName": "INSERT, MODIFY, REMOVE"
+      },
+      "depType": "sub",
+      "fromName": "calm-cover-topic",
+      "toName": "updateCover.js",
+      "async": true,
+      "isQuery": false
+    },
+    {
+      "name": "table",
+      "description": "update cover",
+      "depType": "pub",
+      "fromName": "updateCover.js",
+      "toName": "table",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "cover-dlq-queue",
+      "description": "failed cover calls",
+      "depType": "pub",
+      "fromName": "updateCover.js",
+      "toName": "cover-dlq-queue",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "auth",
+      "description": "Post confirmation",
+      "depType": "sub",
+      "fromName": "auth",
+      "toName": "createUser.js",
+      "async": true,
+      "isQuery": false
+    },
+    {
+      "name": "table",
+      "description": "create new user",
+      "depType": "pub",
+      "fromName": "createUser.js",
+      "toName": "table",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "POST /user",
+      "depType": "sub",
+      "fromName": "POST /user",
+      "toName": "updateUser.js",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "table",
+      "description": "update user name",
+      "depType": "pub",
+      "fromName": "updateUser.js",
+      "toName": "table",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "DELETE /user",
+      "depType": "sub",
+      "fromName": "DELETE /user",
+      "toName": "deleteUser.js",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "table",
+      "depType": "pub",
+      "fromName": "deleteUser.js",
+      "toName": "table",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "auth",
+      "description": "delete from cognito",
+      "depType": "pub",
+      "fromName": "deleteUser.js",
+      "toName": "auth",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "auth",
+      "description": "Custom message",
+      "depType": "sub",
+      "fromName": "auth",
+      "toName": "cognitoSync.js",
+      "async": true,
+      "isQuery": false
+    },
+    {
+      "name": "verification-email",
+      "description": "signup + forgot psw mails",
+      "depType": "pub",
+      "fromName": "cognitoSync.js",
+      "toName": "verification-email",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "auth",
+      "description": "Pre-signup",
+      "isQuery": true,
+      "depType": "sub",
+      "fromName": "auth",
+      "toName": "preSignup.js",
+      "async": true
+    },
+    {
+      "serviceName": "calm-invites",
+      "name": "getInvite.js",
+      "depType": "query",
+      "fromName": "preSignup.js",
+      "toName": "calm-invites-getInvite.js",
+      "async": false,
+      "isQuery": true
+    },
+    {
+      "name": "auth",
+      "description": "Post Auth",
+      "depType": "sub",
+      "fromName": "auth",
+      "toName": "postAuth.js",
+      "async": true,
+      "isQuery": false
+    },
+    {
+      "name": "table",
+      "description": "update stats",
+      "depType": "pub",
+      "fromName": "postAuth.js",
+      "toName": "table",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "table",
+      "depType": "sub",
+      "fromName": "table",
+      "toName": "dbConsumer.js",
+      "async": true,
+      "isQuery": false
+    },
+    {
+      "name": "topic",
+      "filters": {
+        "section": "name, cover, visits"
+      },
+      "depType": "pub",
+      "fromName": "dbConsumer.js",
+      "toName": "topic",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "GET /user",
+      "depType": "sub",
+      "fromName": "GET /user",
+      "toName": "get.js",
+      "async": false,
+      "isQuery": true
+    },
+    {
+      "name": "table",
+      "depType": "query",
+      "fromName": "get.js",
+      "toName": "table",
+      "async": false,
+      "isQuery": true
+    }
+  ]
+}
