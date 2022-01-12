@@ -29,16 +29,8 @@
   - [ ] add API stack for `GET /user`
     - [ ] add function definition for `get.js`
     - [ ] add permissions for `get.js` to access `table`
-  - [ ] add function stack for `getUser.js`
-    - [ ] add permissions for `getUser.js` to access `table`
-  - [ ] add function stack for `getUserByEmail.js`
-    - [ ] add permissions for `getUserByEmail.js` to access `table`
 
 ### In `/src` folder create the handler functions
-  - [ ] create `getUser.js` handler
-    - [ ] add query of `table`
-  - [ ] create `getUserByEmail.js` handler
-    - [ ] add query of `table`
   - [ ] create `updateCover.js` handler
     - [ ] add update for `table` to update cover
     - [ ] add update for `cover-dlq-queue` to failed cover calls
@@ -59,3 +51,12 @@
     - [ ] add update for `topic`
   - [ ] create `get.js` handler to user details upon login
     - [ ] add query of `table`
+
+### In `/npm` folder expose functions and arn info for client
+  - [ ] expose arn for API `DELETE /user`
+  - [ ] expose arn for API `GET /user`
+  - [ ] expose arn for API `POST /user`
+  - [ ] expose arn for function `getUser.js`
+  - [ ] expose arn for function `getUserByEmail.js`
+  - [ ] expose function `getUser.js`
+  - [ ] expose function `getUserByEmail.js`

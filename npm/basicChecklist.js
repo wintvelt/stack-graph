@@ -2,7 +2,7 @@
 // input = struct object
 // output = .md file with todolist 
 
-const { funcDefFromNode, handlerFromFuncNode, stackFromNode, todoFrom } = require("./libs/checklist-lib.js")
+const { funcDefFromNode, handlerFromFuncNode, stackFromNode, todoFrom, clientTodosFromNode } = require("./libs/checklist-lib.js")
 
 module.exports = function (structObj, oldFile) {
     const { nodes } = structObj
@@ -22,28 +22,42 @@ module.exports = function (structObj, oldFile) {
         stacks = funcDefFromNode(stacks, node)
     }
 
-    // add handler todos
-    for (const nodeKey in nodes) {
-        const node = nodes[nodeKey]
-        const needsHandler = (node.type === 'function' && !node.serviceName)
-        if (!needsHandler) continue
-        // add todo to create handler from node
-        srcs = handlerFromFuncNode(srcs, node)
-    }
     let stackLines = []
     for (const key in stacks) {
         const stack = stacks[key]
         stackLines = stackLines.concat(stack)
     }
     stackLines = stackLines.map(todoFrom(oldFile))
+    const stackBlock = stackLines.join('\n')
+
+    // add handler todos
+    for (const nodeKey in nodes) {
+        const node = nodes[nodeKey]
+        const needsHandler = (node.type === 'function' && node.cluster === 'internal')
+        if (!needsHandler) continue
+        // add todo to create handler from node
+        srcs = handlerFromFuncNode(srcs, node)
+    }
+
     let srcLines = []
     for (const key in srcs) {
         const src = srcs[key]
         srcLines = srcLines.concat(src)
     }
     srcLines = srcLines.map(todoFrom(oldFile))
-    const stackBlock = stackLines.join('\n')
     const srcBlock = srcLines.join('\n')
+
+    // add todos for npm client
+    let clientLines = []
+    for (const nodeKey in nodes) {
+        const node = nodes[nodeKey]
+        const needsClient = (node.cluster === 'input')
+        if (!needsClient) continue
+        // add todo to create handler from node
+        clientLines = clientTodosFromNode(clientLines, node)
+    }
+    clientLines = clientLines.map(todoFrom(oldFile)).sort()
+    const clientBlock = clientLines.join('\n')
 
     const output = `## Todo list to create your stack
 
@@ -51,7 +65,10 @@ module.exports = function (structObj, oldFile) {
 ${stackBlock}
 
 ### In \`/src\` folder create the handler functions
-${srcBlock}`
+${srcBlock}
+
+### In \`/npm\` folder expose functions and arn info for client
+${clientBlock}`
 
     return output
 }

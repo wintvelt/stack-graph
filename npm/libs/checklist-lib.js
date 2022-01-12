@@ -49,15 +49,16 @@ const funcDefFromNode = (stacks, node) => {
     const isInternalFunc = (node.type === 'function' && !node.serviceName)
     if (!isInternalFunc) return output
 
+    const isLambda = (!node.cluster === 'input') // input funcs are generated in npm client package
     const needsStack = (!node.subs || node.subs.length === 0)
-    if (needsStack) {
+    if (needsStack && isLambda) {
         const nodeStack = [`  - [ ] add function stack for \`${node.name}\``]
         output[node.name] = nodeStack
         output[node.name] = addPermissionsForPubs(output[node.name], node, '  ')
         return output
     }
-    const funcOwner = node.subs[0].name
-    const ownerNotInStack = !output[funcOwner]
+    const funcOwner = node.subs && node.subs[0].name
+    const ownerNotInStack = !funcOwner || !output[funcOwner]
     if (ownerNotInStack) return output
 
     const newTodo = `    - [ ] add function definition for \`${node.name}\``
@@ -94,11 +95,35 @@ const handlerFromFuncNode = (srcs, node) => {
     return output
 }
 
+// add todos to expose stuff in npm client
+const clientTodosFromNode = (clientLines, node) => {
+    let output = [...clientLines]
+    switch (node.type) {
+        case "API":
+            output.push(`  - [ ] expose arn for API \`${node.name}\``)
+            break;
+
+        case "queue":
+            output.push(`  - [ ] expose arn for queue \`${node.name}\``)
+            break;
+
+        case "function":
+            output.push(`  - [ ] expose function \`${node.name}\``)
+            output.push(`  - [ ] expose arn for function \`${node.name}\``)
+            break
+
+        default: // no todos, e.g. auth will not be exposed
+            break;
+    }
+    return output
+}
+
 module.exports = {
     todoFrom,
     addPermissionsForPubs,
     stackFromNode,
     funcDefFromNode,
     addLinesForPubs,
-    handlerFromFuncNode
+    handlerFromFuncNode,
+    clientTodosFromNode
 }

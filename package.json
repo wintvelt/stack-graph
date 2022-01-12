@@ -8,10 +8,8 @@
   },
   "author": "wintvelt",
   "license": "ISC",
-  "dependencies": {
-    "jsonschema": "^1.4.0"
-  },
   "devDependencies": {
+    "jsonschema": "^1.4.0",
     "jest": "^27.4.5"
   }
 }

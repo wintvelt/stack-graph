@@ -53,7 +53,9 @@ const typeFromName = (name) => {
 const standardNode = (node) => {
     const type = node.type || typeFromName(node.name)
     const name = (type === 'API') ?
-        `${node.method} ${node.path}`
+        (node.name) ?
+            node.name
+            : `${node.method} ${node.path}`
         : (type === 'function') ?
             node.name
             : (node.name) ?
@@ -123,14 +125,14 @@ const updateNodesFromDep = (nodes, dep, depType) => {
     })
 }
 
-const hasQuerySub = (nodesObj, name) => {
-    const querySubscriberKeys = Object.keys(nodesObj).filter(key => {
+const hasOnlyQuerySub = (nodesObj, name) => {
+    const querySubscriberWithPubs = Object.keys(nodesObj).filter(key => {
         const node = nodesObj[key]
         const isSubscribed = !!node.subs && !!node.subs.map(s => s.name).find(n => (n === name))
-        const hasNoPubs = !node.pubs || node.pubs.length === 0
-        return (isSubscribed && hasNoPubs)
+        const hasPubs = !!node.pubs && node.pubs.length > 0
+        return (isSubscribed && hasPubs)
     })
-    return (querySubscriberKeys.length > 0)
+    return (querySubscriberWithPubs.length === 0)
 }
 
 const nodesFromStack = (stackdef) => {
@@ -161,7 +163,7 @@ const nodesFromStack = (stackdef) => {
                 nodesObj[key].isQuery = (!node.pubs || node.pubs.length === 0)
                 break
             case "API":
-                nodesObj[key].isQuery = hasQuerySub(nodesObj, key)
+                nodesObj[key].isQuery = hasOnlyQuerySub(nodesObj, key)
             default:
                 break
         }

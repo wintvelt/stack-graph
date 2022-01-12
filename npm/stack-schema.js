@@ -21,7 +21,6 @@ const subSchema = {
     type: "object",
     properties: {
         ...baseDepProps,
-        filter: { type: "string", enum: eventNames }
     },
     required: ["name"]
 }
