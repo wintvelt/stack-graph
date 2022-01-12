@@ -224,4 +224,4 @@ module.exports = {
 ```
 
 Will generate this image:
-![example stack graph](example/stackdef.png)
+![example stack graph](https://raw.githubusercontent.com/wintvelt/stack-graph/main/npm/example/stackdef.png)
