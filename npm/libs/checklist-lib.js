@@ -108,13 +108,18 @@ const clientTodosFromNode = (clientLines, node) => {
             break;
 
         case "function":
-            const specs = (node.pubs) ?
-                `to invoke \`${node.pubs[0].name}\``
+            const arnName = (node.pubs) ?
+                node.pubs[0].name
                 : (node.queries) ?
-                    `to query \`${node.queries[0].name}\``
-                    : ''
+                    node.queries[0].name
+                    : ' (something?)'
+            const specs = (node.pubs) ?
+                ` to invoke \`${node.pubs[0].name}\``
+                : (node.queries) ?
+                    ` to query \`${node.queries[0].name}\``
+                    : ' (something?)'
             output.push(`  - [ ] expose function \`${node.name}\`${specs}`)
-            output.push(`  - [ ] expose arn for function \`${node.name}\``)
+            output.push(`  - [ ] expose arn of \`${arnName}\` for permission to invoke function \`${node.name}\``)
             break
 
         default: // no todos, e.g. auth will not be exposed

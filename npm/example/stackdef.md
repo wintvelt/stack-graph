@@ -58,7 +58,7 @@
   - [ ] expose arn for API `DELETE /user`
   - [ ] expose arn for API `GET /user`
   - [ ] expose arn for API `POST /user`
-  - [ ] expose arn for function `getUser.js`
-  - [ ] expose arn for function `getUserByEmail.js`
-  - [ ] expose function `getUser.js`to query `get.js`
-  - [ ] expose function `getUserByEmail.js`to query `getByEmail.js`
+  - [ ] expose arn of `get.js` for permission to invoke function `getUser.js`
+  - [ ] expose arn of `getByEmail.js` for permission to invoke function `getUserByEmail.js`
+  - [ ] expose function `getUser.js` to query `get.js`
+  - [ ] expose function `getUserByEmail.js` to query `getByEmail.js`
