@@ -105,6 +105,7 @@ const clientTodosFromNode = (clientLines, node) => {
 
         case "queue":
             output.push(`  - [ ] expose arn for queue \`${node.name}\``)
+            output.push(`  - [ ] expose url endpoint for queue \`${node.name}\``)
             break;
 
         case "function":
