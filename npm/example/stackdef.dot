@@ -130,7 +130,7 @@ digraph {
     node13 -> node3 [label="dest=user\leventName=INSERT, MODIFY, REMOVE" arrowhead = nonenoneonormal]
     node3 -> node12 [label="update cover"]
     node3 -> node14 [label="failed cover calls"]
-    node15 -> node4 [label="Post confirmation"]
+    node15 -> node4 [label="Post confirmation" arrowhead = nonenoneonormal]
     node4 -> node12 [label="create new user"]
     node16 -> node5
     node5 -> node12 [label="update user name"]

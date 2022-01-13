@@ -75,8 +75,7 @@
       "subs": [
         {
           "name": "auth",
-          "description": "Post confirmation",
-          "async": false
+          "description": "Post confirmation"
         }
       ],
       "type": "function",
@@ -369,10 +368,10 @@
     {
       "name": "auth",
       "description": "Post confirmation",
-      "async": false,
       "depType": "sub",
       "fromName": "auth",
       "toName": "createUser.js",
+      "async": true,
       "isQuery": false
     },
     {

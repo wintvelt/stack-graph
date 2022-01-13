@@ -129,8 +129,9 @@ Async calls are indicated by an open arrow. NB: Streamed events (from auth and d
 
 If a node or dependency item has the string `dlq` (for dead letter queue) of `failover` in its name, the node will get a different layout. You would want to monitor these from somewhere else. Best practice is to include a 
 - dead letter queue for any function that is invoked asynchronously (from other Lambda, SQS, SNS, S3 etc)
-- or failover queue needed for any function that is invoked by a stream (from db) - needs setup in eventSourceMapping/ trigger
+- or failover queue needed for any function that is invoked by a stream (from db) - needs setup in eventSourceMapping/ trigger. NB: events only logged if the real event source makes the call
 NB: Auth/ Cognito does not have any options to queue failed events. Cognito triggers are called synchronously, but these triggers are not configured in Lambda. Any failures should be gracefully fed back to invoking API or call - usually a user/ front-end
+
 
 ## Example
 The following `stackdef.js` definition:
