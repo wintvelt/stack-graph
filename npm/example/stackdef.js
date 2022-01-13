@@ -57,12 +57,7 @@ module.exports = {
         {
             name: "cognitoSync.js",
             description: "Custom message",
-            pubs: [
-                {
-                    name: "verification-email",
-                    description: "signup + forgot psw mails",
-                },
-            ],
+            pubs: [{ name: "verification-email", description: "signup + forgot psw mails" },],
             subs: [{ name: "auth", description: "Custom message" }],
         },
         {
@@ -74,14 +69,17 @@ module.exports = {
         {
             name: "postAuth.js",
             description: "update stats on visit",
-            pubs: [{ name: "table", description: "update stats" }],
+            pubs: [{ name: "table", description: "update stats" },],
             subs: [{ name: "auth", description: "Post Auth" }],
         },
         {
             name: "dbConsumer.js",
             description: "db stream to publish changes",
             subs: ["table"],
-            pubs: [{ name: "topic", filters: { section: "name, cover, visits" } }],
+            pubs: [
+                { name: "topic", filters: { section: "name, cover, visits" } },
+                { name: "failover-db-queue" },
+            ],
         },
         {
             name: "get.js",

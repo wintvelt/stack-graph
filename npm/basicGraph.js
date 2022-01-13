@@ -43,7 +43,7 @@ const nodeContent = (node) => {
         : ''
 
     const extFontsize = (node.cluster === 'input' && node.type === 'function') ? 12 : 14
-    const isDlq = (node.name.includes('dlq'))
+    const isDlq = (node.name.includes('dlq') || node.name.includes('failover'))
     const dlqStyle = (isDlq) ? 'style=dashed color=red ' : ''
 
     return (node.cluster.includes('ext')) ?

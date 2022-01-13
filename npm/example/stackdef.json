@@ -75,7 +75,8 @@
       "subs": [
         {
           "name": "auth",
-          "description": "Post confirmation"
+          "description": "Post confirmation",
+          "async": false
         }
       ],
       "type": "function",
@@ -201,6 +202,9 @@
           "filters": {
             "section": "name, cover, visits"
           }
+        },
+        {
+          "name": "failover-db-queue"
         }
       ],
       "type": "function",
@@ -292,12 +296,18 @@
       "cluster": "output",
       "nodeId": "node20"
     },
+    "failover-db-queue": {
+      "name": "failover-db-queue",
+      "type": "queue",
+      "cluster": "output",
+      "nodeId": "node21"
+    },
     "GET /user": {
       "name": "GET /user",
       "type": "API",
       "cluster": "input",
       "isQuery": true,
-      "nodeId": "node21"
+      "nodeId": "node22"
     }
   },
   "edges": [
@@ -359,10 +369,10 @@
     {
       "name": "auth",
       "description": "Post confirmation",
+      "async": false,
       "depType": "sub",
       "fromName": "auth",
       "toName": "createUser.js",
-      "async": true,
       "isQuery": false
     },
     {
@@ -486,6 +496,14 @@
       "depType": "pub",
       "fromName": "dbConsumer.js",
       "toName": "topic",
+      "async": false,
+      "isQuery": false
+    },
+    {
+      "name": "failover-db-queue",
+      "depType": "pub",
+      "fromName": "dbConsumer.js",
+      "toName": "failover-db-queue",
       "async": false,
       "isQuery": false
     },

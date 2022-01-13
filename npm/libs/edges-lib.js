@@ -8,10 +8,12 @@ const updateEdgesFromDep = (edges = [], dep, depType, nodeName, node) => {
     const [fromName, toName] = (depType === "sub") ? [depName, nodeName] : [nodeName, depName]
     const async = Object.hasOwnProperty.call(dep, 'async') ?
         dep.async
-        : (depType === "pub" && dep.async) || (depType === "sub" && !dep.name.includes("/"))
+        : (depType === "sub" && !dep.name.includes("/"))
     const isQuery = Object.hasOwnProperty.call(dep, 'isQuery') ?
         dep.isQuery
-        : (depType === "sub") ? (depNodeType === "API" && node.isQuery) : (depType === "query")
+        : (depType === "sub") ?
+            (depNodeType === "API" && node.isQuery) 
+            : (depType === "query")
     const newEdge = { ...dep, depType, fromName, toName, async, isQuery }
     return [
         ...edges,

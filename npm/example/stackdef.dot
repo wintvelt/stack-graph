@@ -21,7 +21,7 @@ digraph {
             </table>>]
         node16 [ shape=invhouse fontsize=12 label="POST\n/user"]
         node17 [ shape=invhouse fontsize=12 label="DELETE\n/user"]
-        node21 [ shape=invhouse color=orange fontsize=12 label="GET\n/user"]
+        node22 [ shape=invhouse color=orange fontsize=12 label="GET\n/user"]
     }
     subgraph cluster1 {
             label="internal"
@@ -111,6 +111,10 @@ digraph {
                 <td align="left"><font point-size="10">name, cover, visits</font></td>
             </tr>
             </table>>]
+        node21 [ shape=rarrow style=dashed color=red label=<
+            <table border="0" cellborder="0" cellspacing="0">
+            <tr><td align="left"><font point-size="14">failover-db-queue</font></td></tr>
+            </table>>]
     }
     subgraph cluster4 {
             label="extOutput"
@@ -126,7 +130,7 @@ digraph {
     node13 -> node3 [label="dest=user\leventName=INSERT, MODIFY, REMOVE" arrowhead = nonenoneonormal]
     node3 -> node12 [label="update cover"]
     node3 -> node14 [label="failed cover calls"]
-    node15 -> node4 [label="Post confirmation" arrowhead = nonenoneonormal]
+    node15 -> node4 [label="Post confirmation"]
     node4 -> node12 [label="create new user"]
     node16 -> node5
     node5 -> node12 [label="update user name"]
@@ -141,7 +145,8 @@ digraph {
     node9 -> node12 [label="update stats"]
     node12 -> node10 [arrowhead = nonenoneonormal]
     node10 -> node20
-    node21 -> node11 [color=orange arrowhead=nonenonenoneoinv]
+    node10 -> node21
+    node22 -> node11 [color=orange arrowhead=nonenonenoneoinv]
     node11 -> node12 [color=orange arrowhead=nonenonenoneoinv]
 
     labelloc="t"
