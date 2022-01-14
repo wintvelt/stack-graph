@@ -100,7 +100,7 @@ const clientTodosFromNode = (clientLines, node) => {
     let output = [...clientLines]
     switch (node.type) {
         case "API":
-            output.push(`  - [ ] expose endppint url for API \`${node.name}\``)
+            output.push(`  - [ ] expose endpoint url for API \`${node.name}\``)
             break;
 
         case "queue":
