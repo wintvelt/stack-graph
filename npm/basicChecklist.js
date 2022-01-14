@@ -2,7 +2,8 @@
 // input = struct object
 // output = .md file with todolist 
 
-const { funcDefFromNode, handlerFromFuncNode, stackFromNode, todoFrom, clientTodosFromNode } = require("./libs/checklist-lib.js")
+const { funcDefFromNode, handlerFromFuncNode, stackFromNode, todoFrom, clientTodosFromNode } =
+    require("./libs/checklist-lib.js")
 
 module.exports = function (structObj, oldFile) {
     const { nodes } = structObj
@@ -51,7 +52,7 @@ module.exports = function (structObj, oldFile) {
     let clientLines = []
     for (const nodeKey in nodes) {
         const node = nodes[nodeKey]
-        const needsClient = (node.cluster === 'input')
+        const needsClient = (["input","output"].includes(node.cluster))
         if (!needsClient) continue
         // add todo to create handler from node
         clientLines = clientTodosFromNode(clientLines, node)

@@ -1,5 +1,12 @@
 // libs to create checklist from structObj
 
+/*
+    TODO:
+    add npm todos for topic output
+    add todos for extInput and extOutput
+*/
+
+
 // mark todo as done if already included as done in oldFile
 const todoFrom = (oldFile) => (todo) => {
     const todoDone = todo.replace('[ ]', '[x]')
@@ -98,9 +105,10 @@ const handlerFromFuncNode = (srcs, node) => {
 // add todos to expose stuff in npm client
 const clientTodosFromNode = (clientLines, node) => {
     let output = [...clientLines]
+    // TODO: add stuff to subscribe to Topics output
     switch (node.type) {
         case "API":
-            output.push(`  - [ ] expose endpoint url for API \`${node.name}\``)
+            output.push(`  - [ ] expose url endpoint for API \`${node.name}\``)
             break;
 
         case "queue":
