@@ -28,7 +28,10 @@ const addPermissionsForPubs = (todoList, node, indent = '') => {
     if (list.length === 0) return todoList
     let output = [...todoList]
     for (const item of list) {
-        const newTodo = `${indent}  - [ ] add permissions for \`${name}\` to access ${niceName(item)}`
+        const isDlq = (item.name.includes('dlq') || item.name.includes('failover'))
+        const newTodo = (isDlq) ?
+            `${indent}  - [ ] add ${niceName(item)} as dlq/ failover for \`${name}\``
+            : `${indent}  - [ ] add permissions for \`${name}\` to access ${niceName(item)}`
         output.push(newTodo)
     }
     return output
@@ -86,6 +89,8 @@ const addLinesForPubs = (todoList, node) => {
         output.push(newTodo)
     }
     for (const pub of pubs) {
+        const isDlq = (pub.name.includes('dlq') || pub.name.includes('failover'))
+        if (isDlq) continue
         const desc = (pub.description) ? ` to ${pub.description}` : ''
         const newTodo = `    - [ ] add update for ${niceName(pub)}${desc}`
         output.push(newTodo)

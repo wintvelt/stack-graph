@@ -4,7 +4,7 @@
   - [ ] add table stack for `table`
     - [ ] add function definition for `dbConsumer.js`
     - [ ] add permissions for `dbConsumer.js` to access `topic`
-    - [ ] add permissions for `dbConsumer.js` to access `failover-db-queue`
+    - [ ] add `failover-db-queue` as dlq/ failover for `dbConsumer.js`
   - [ ] add queue stack for `cover-dlq-queue`
   - [ ] add auth stack for `auth`
     - [ ] add function definition for `createUser.js`
@@ -26,7 +26,7 @@
   - [ ] add topic stack for `topic`
     - [ ] add function definition for `updateCover.js`
     - [ ] add permissions for `updateCover.js` to access `table`
-    - [ ] add permissions for `updateCover.js` to access `cover-dlq-queue`
+    - [ ] add `cover-dlq-queue` as dlq/ failover for `updateCover.js`
   - [ ] add queue stack for `failover-db-queue`
   - [ ] add API stack for `GET /user`
     - [ ] add function definition for `get.js`
@@ -37,7 +37,6 @@
     - [ ] add query of `table`
   - [ ] create `updateCover.js` handler
     - [ ] add update for `table` to update cover
-    - [ ] add update for `cover-dlq-queue` to failed cover calls
   - [ ] create `createUser.js` handler
     - [ ] add update for `table` to create new user
   - [ ] create `updateUser.js` handler to change name (not cover)
@@ -53,15 +52,18 @@
     - [ ] add update for `table` to update stats
   - [ ] create `dbConsumer.js` handler to db stream to publish changes
     - [ ] add update for `topic`
-    - [ ] add update for `failover-db-queue`
   - [ ] create `get.js` handler to user details upon login
     - [ ] add query of `table`
 
 ### In `/npm` folder expose functions and arn info for client
+  - [ ] expose arn for queue `cover-dlq-queue`
+  - [ ] expose arn for queue `failover-db-queue`
   - [ ] expose arn of `get.js` for permission to invoke function `getUser.js`
   - [ ] expose arn of `getByEmail.js` for permission to invoke function `getUserByEmail.js`
-  - [ ] expose endppint url for API `DELETE /user`
-  - [ ] expose endppint url for API `GET /user`
-  - [ ] expose endppint url for API `POST /user`
   - [ ] expose function `getUser.js` to query `get.js`
   - [ ] expose function `getUserByEmail.js` to query `getByEmail.js`
+  - [ ] expose url endpoint for API `DELETE /user`
+  - [ ] expose url endpoint for API `GET /user`
+  - [ ] expose url endpoint for API `POST /user`
+  - [ ] expose url endpoint for queue `cover-dlq-queue`
+  - [ ] expose url endpoint for queue `failover-db-queue`
