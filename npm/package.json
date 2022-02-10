@@ -1,6 +1,6 @@
 {
   "name": "stack-graph",
-  "version": "1.10.1",
+  "version": "1.10.2",
   "description": "Build graphviz from stack definition file. Outputs .dot file, .json file (structure), .md file (todo list), and .png or .svg graph. Companion to sst-serverless microservice stack",
   "main": "local.js",
   "directories": {
