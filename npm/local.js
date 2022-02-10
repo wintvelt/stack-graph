@@ -33,7 +33,7 @@ async function localGraph(passedArgs) {
     }
 
     // create object with all nodes and edges
-    const structObj = makeStruct(stackdefObj)
+    const structObj = { ...stackdefObj, ...makeStruct(stackdefObj) }
     const jsonFilename = `${path}/${outputFilename}.json`
     try {
         writeFileSync(jsonFilename, JSON.stringify(structObj, null, 2))

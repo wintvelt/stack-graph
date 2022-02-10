@@ -1,6 +1,6 @@
 {
   "name": "stack-graph",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Build graphviz (dot file) graphs from stack definition file",
   "main": "example/index.js",
   "scripts": {
